@@ -1,0 +1,81 @@
+<!doctype>
+<html ng-app="app">
+<head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel='stylesheet' href='/stylesheets/style.css'/>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js'></script>
+<style type="text/css" rel="stylesheet">
+	body {
+	    background: #fafafa;
+	    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	    color: #333;
+	}
+
+	.cell {
+	    border-radius: 10px;
+	    -moz-border-radius: 10px;
+	    -webkit-border-radius: 10px;
+	    border: 1px solid black;
+	    margin: 15px;
+	    height: 50px;
+	    width: 50px;
+	    content: " ";
+	}​
+
+	.filled {
+	    background-color: red;
+	}
+
+	th {
+		text-align: center;
+	}
+
+	th.disabled {
+		color: red;
+		cursor: not-allowed;
+	}
+
+	th.enabled {
+		color: green;
+		cursor: grab;
+	}
+</style>
+</head>
+<body class="container" ng-controller="GameController">
+		<div ng-show="missingPlayer" class="alert alert-info">
+			Falta un jugador
+		</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<table ng-show="!missingPlayer">
+				<thead>
+				<tr>
+					<th ng-class="{disabled: !myTurn, enabled: myTurn}" ng-repeat="row in gridGame" 
+					ng-click="myTurn && play($event)" data-head="{{$index}}">
+						Click!
+					</th>	
+				</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(idx, row) in gridGame">
+						<td data-row="{{idx}}" ng-repeat="col in row track by $index">
+							<div class="cell" style="{{col.style}}"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		window.__COLOR = '<%= color %>';
+	</script>
+
+	<script src='/socket.io/socket.io.js'></script>
+    <script src='/components/angular-socket-io/socket.min.js'></script>
+    <script src='/javascripts/app.js'></script>
+</body>
+</html>
